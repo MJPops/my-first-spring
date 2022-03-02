@@ -1,9 +1,7 @@
 package com.example.myFirstSpring.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class UserEntity {
@@ -13,6 +11,9 @@ public class UserEntity {
     private long id;
     private String userName;
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<TodoEntity> todoEntities;
 
 
     public UserEntity() {
@@ -56,5 +57,13 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<TodoEntity> getTodoEntities() {
+        return todoEntities;
+    }
+
+    public void setTodoEntities(List<TodoEntity> todoEntities) {
+        this.todoEntities = todoEntities;
     }
 }
