@@ -3,7 +3,6 @@ package com.example.myFirstSpring.controller;
 import com.example.myFirstSpring.entity.UserEntity;
 import com.example.myFirstSpring.exceptions.UserAlreadyExistException;
 import com.example.myFirstSpring.exceptions.UserNotFoundException;
-import com.example.myFirstSpring.repository.UserRepository;
 import com.example.myFirstSpring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +16,11 @@ public class UsersController {
     private UserService userService;
 
     @GetMapping("/get")
-    public ResponseEntity getUser(Long id) {
+    public ResponseEntity get(Long id) {
         try {
             userService.getUser(id);
             return ResponseEntity.ok(userService.getUser(id));
-        }catch (UserNotFoundException ex){
+        } catch (UserNotFoundException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
@@ -32,6 +31,16 @@ public class UsersController {
             userService.registration(user);
             return ResponseEntity.ok("User is registered");
         } catch (UserAlreadyExistException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
