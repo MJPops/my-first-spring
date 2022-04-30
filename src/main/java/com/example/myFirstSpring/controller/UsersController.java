@@ -15,6 +15,11 @@ public class UsersController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    public  ResponseEntity sayHello(){
+        return  ResponseEntity.ok("Hello");
+    }
+
     @GetMapping("/get")
     public ResponseEntity get(Long id) {
         try {
